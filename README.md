@@ -38,3 +38,35 @@ En este repositorio se trabajan los siguientes aspectos de Nest:
 - JWTs, firma y regeneración
 - Revalidación
 - Guards
+
+## Librerías necesarias
+
+Para la gestión de microservicios:
+
+```bash
+$ npm i --save @nestjs/microservices
+```
+
+Para utilizar NATS para las comunicaciones del microservicio:
+
+```bash
+$ npm i --save nats
+```
+
+Para la gestión de variables de entorno:
+
+```bash
+$ npm install dotenv
+```
+
+Para los esquemas de validación:
+
+```bash
+$ npm install joi
+```
+
+Para las validaciones de datos se utilizan:
+
+```bash
+$ npm install class-validator class-transformer
+```
