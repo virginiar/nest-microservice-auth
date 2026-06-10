@@ -70,3 +70,13 @@ Para las validaciones de datos se utilizan:
 ```bash
 $ npm install class-validator class-transformer
 ```
+
+La conexión de la base de datos se realiza con Prisma:
+Nota: Se utiliza la versión 6.19 porque es la más actual compatible con MongoDB según la documentación de Prisma
+```bash
+$ npm install prisma@6.19 --save-dev
+$ npx prisma init
+$ npx prisma db push
+
+$ npm install @prisma/client@6.19
+```
