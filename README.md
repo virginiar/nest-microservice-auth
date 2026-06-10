@@ -80,3 +80,10 @@ $ npx prisma db push
 
 $ npm install @prisma/client@6.19
 ```
+
+Para la encriptación y hashing de datos se utiliza:
+
+```bash
+$ npm install bcrypt
+$ npm install --save-dev @types/bcrypt
+```
