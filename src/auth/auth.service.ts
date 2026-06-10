@@ -1,15 +1,25 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
+import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../prisma/prisma.service';
+import { envs } from '../config';
 import { LoginUserDto, RegisterUserDto } from './dto';
+import { JwtPayload } from './interfaces/jwt-payload.interface';
 
 @Injectable()
 export class AuthService {
   private readonly logger = new Logger('ProductsService');
 
-  constructor(private prisma: PrismaService) {
+  constructor(
+    private prisma: PrismaService,
+    private readonly jwtService: JwtService,
+  ) {
     this.logger.log('MongoDB database connected');
+  }
+
+  signJWT(payload: JwtPayload) {
+    return this.jwtService.sign(payload);
   }
 
   async registerUser(registerUserDto: RegisterUserDto) {
@@ -40,7 +50,7 @@ export class AuthService {
 
       return {
         user: rest,
-        token: 'ABC',
+        token: this.signJWT(rest),
       };
     } catch (error) {
       throw new RpcException({
@@ -78,12 +88,31 @@ export class AuthService {
 
       return {
         user: rest,
-        token: 'ABC',
+        token: this.signJWT(rest),
       };
     } catch (error) {
       throw new RpcException({
         status: 400,
         message: error.message,
+      });
+    }
+  }
+
+  async verifyToken(token: string) {
+    try {
+      const { sub, iat, exp, ...user } = this.jwtService.verify(token, {
+        secret: envs.jwtSecret,
+      });
+
+      return {
+        user: user,
+        token: this.signJWT(user),
+      };
+    } catch (error) {
+      console.log(error);
+      throw new RpcException({
+        status: 401,
+        message: 'Invalid token',
       });
     }
   }

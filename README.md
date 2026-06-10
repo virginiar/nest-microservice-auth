@@ -87,3 +87,9 @@ Para la encriptación y hashing de datos se utiliza:
 $ npm install bcrypt
 $ npm install --save-dev @types/bcrypt
 ```
+
+Para la gestión de JWT:
+
+```bash
+$ npm install --save @nestjs/jwt
+```
